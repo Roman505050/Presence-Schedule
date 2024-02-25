@@ -22,7 +22,7 @@ class Schedule(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     group_id: Mapped[int] = mapped_column(ForeignKey("Groups.id"), nullable=False)
-    week: Mapped[Week] = mapped_column(Integer, nullable=False)
+    week: Mapped[Week] = mapped_column(nullable=False)
     day: Mapped[Day] = mapped_column(String(20), nullable=False)
     couple: Mapped[int] = mapped_column(Numeric(1), nullable=False)
     lesson: Mapped[str] = mapped_column(String(255), nullable=False)
