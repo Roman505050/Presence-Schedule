@@ -6,12 +6,13 @@ import pytz
 from src.tasks.notification import send_message
 
 
-def send_message_task(text):
-    asyncio.create_task(send_message(text=text))
+def send_message_task(schedule_id: int):
+    asyncio.create_task(send_message(schedule_id=schedule_id))
 
 def tasks():
     tz = pytz.timezone('Europe/Kiev')
-    schedule.every().saturday.at("21:26").do(send_message_task, schedule_id=1).timezone = tz
+    schedule.every().day.at("15:15").do(send_message_task, 1).tag('send_message').timezone = tz
+    schedule.every().day.at("15:16").do(send_message_task, 1).tag('send_message').timezone = tz
 
 async def main():
     tasks()
