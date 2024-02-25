@@ -8,9 +8,9 @@ from src.utils.unitofwork import IUnitOfWork, UnitOfWork
 async def send_message(schedule_id: int):
     uow: IUnitOfWork = UnitOfWork()
     data = await ScheduleService().get_students_schedule(uow, schedule_id)
-
+    if data is None:
+        return
     URL = f"https://api.telegram.org/bot{settings.TELEGRAM_TOKEN}/sendMessage"
-    print(data.group.students)
     for student in data.group.students:
         keyboard = {
             'inline_keyboard': [
