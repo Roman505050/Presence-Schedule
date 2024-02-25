@@ -1,5 +1,4 @@
 import schedule
-import aiohttp
 import asyncio
 import pytz
 
