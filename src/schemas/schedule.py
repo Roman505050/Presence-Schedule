@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 import datetime
 
+from src.database.enums import Week
+
 
 class StudentsSchema(BaseModel):
     id: int
@@ -21,7 +23,7 @@ class GroupSchema(BaseModel):
 class ScheduleSchema(BaseModel):
     id: int
     day: int
-    week: int
+    week: Week
     couple: int
     lesson: str
     teacher: str

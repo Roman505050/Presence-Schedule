@@ -24,6 +24,5 @@ class Register(Base):
     presence: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     schedule_id: Mapped[int] = mapped_column(ForeignKey("Schedule.id"), nullable=False)
     date: Mapped[datetime.date] = mapped_column(nullable=False)
-    active_to: Mapped[datetime.datetime] = mapped_column(nullable=False)
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]

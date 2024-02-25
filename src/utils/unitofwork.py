@@ -2,11 +2,12 @@ from abc import ABC, abstractmethod
 from typing import Type
 
 from src.database.core import async_session_maker
-from src.repositories.schedule import ScheduleRepository
+from src.repositories import ScheduleRepository, RegisterRepository
 
 
 class IUnitOfWork(ABC):
     schedule: Type[ScheduleRepository]
+    register: Type[RegisterRepository]
 
     @abstractmethod
     async def __init__(self):
@@ -36,6 +37,7 @@ class UnitOfWork(IUnitOfWork):
         self.session = self.session_factory()
 
         self.schedule = ScheduleRepository(self.session)
+        self.register = RegisterRepository(self.session)
     
     async def __aexit__(self, *args):
         await self.rollback()

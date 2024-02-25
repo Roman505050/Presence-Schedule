@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from sqlalchemy import select
+from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 class AbstractRepository(ABC):
@@ -31,3 +31,8 @@ class SQLAlchemyRepository(AbstractRepository):
         if res is not None:
             return res
         return None
+
+    async def add_one(self, kwargs: dict):
+        stmt = insert(self.model).values(kwargs).returning('*')
+        res = await self.session.execute(stmt)
+        return res.fetchone()

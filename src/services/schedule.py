@@ -1,5 +1,5 @@
 from src.utils.unitofwork import IUnitOfWork
-from src.schemas.schedule import ScheduleSchema
+from src.schemas import ScheduleSchema
 
 class ScheduleService:
     async def get_students_schedule(self, uow: IUnitOfWork, schedule_id: int) -> ScheduleSchema | None:

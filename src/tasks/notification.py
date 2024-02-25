@@ -1,7 +1,10 @@
 import aiohttp
+import pytz
+import datetime
 
 from src.config import settings
-from src.services.schedule import ScheduleService
+from src.services import ScheduleService, RegisterService
+from src.schemas import RegisterCreateSchema
 from src.utils.unitofwork import IUnitOfWork, UnitOfWork
 
 
@@ -11,17 +14,27 @@ async def send_message(schedule_id: int):
     if data is None:
         return
     URL = f"https://api.telegram.org/bot{settings.TELEGRAM_TOKEN}/sendMessage"
+    UTC_NOW = datetime.datetime.utcnow()
+    KIEV_NOW = UTC_NOW.astimezone(pytz.timezone(settings.TIMEZONE))
     for student in data.group.students:
+        register = await RegisterService().add_register(
+            uow, 
+            register=RegisterCreateSchema(
+                student_id=student.id,
+                schedule_id=schedule_id,
+                date=KIEV_NOW.date(),
+            )
+        )
         keyboard = {
             'inline_keyboard': [
                 [
                     {
                         'text': '✅ Присутній',
-                        'callback_data': 'present'
+                        'callback_data': f'present:{register.id}'
                     },
                     {
                         'text': '❌ Відсутній',
-                        'callback_data': 'absent'
+                        'callback_data': f'absent:{register.id}'
                     }
                 ]
             ]
@@ -31,6 +44,7 @@ async def send_message(schedule_id: int):
             'text': f'Пара: {data.couple}\nПредмет: {data.lesson}\nВикладач: {data.teacher}\nАудиторія: {data.classroom}',
             'reply_markup': keyboard
         }
+        print(data)
         async with aiohttp.ClientSession() as session:
             async with session.post(URL, json=data) as response:
                 await response.json()

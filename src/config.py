@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-
+from datetime import timedelta
 
 class Settings(BaseSettings):
     DB_HOST: str
@@ -12,6 +12,9 @@ class Settings(BaseSettings):
 
     REDIS_HOST: str = '127.0.0.1'
     REDIS_PORT: int
+
+    ACTIVE_TO: timedelta = timedelta(hours=2)
+    TIMEZONE: str = 'Europe/Kiev'
 
     @property
     def db_uri_asyncpg(self):
