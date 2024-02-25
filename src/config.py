@@ -10,9 +10,6 @@ class Settings(BaseSettings):
 
     TELEGRAM_TOKEN: str
 
-    REDIS_HOST: str = '127.0.0.1'
-    REDIS_PORT: int
-
     ACTIVE_TO: timedelta = timedelta(hours=2)
     TIMEZONE: str = 'Europe/Kiev'
 

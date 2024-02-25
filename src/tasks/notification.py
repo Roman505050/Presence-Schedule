@@ -44,7 +44,6 @@ async def send_message(schedule_id: int):
             'text': f'Пара: {data.couple}\nПредмет: {data.lesson}\nВикладач: {data.teacher}\nАудиторія: {data.classroom}',
             'reply_markup': keyboard
         }
-        print(data)
         async with aiohttp.ClientSession() as session:
             async with session.post(URL, json=data) as response:
                 await response.json()
