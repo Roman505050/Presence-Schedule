@@ -11,6 +11,10 @@ class AbstractRepository(ABC):
     @abstractmethod
     async def get_one():
         return NotImplemented
+    
+    @abstractmethod
+    async def add_one():
+        return NotImplemented
 
 class SQLAlchemyRepository(AbstractRepository):
     model = None

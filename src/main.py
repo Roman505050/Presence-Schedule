@@ -15,8 +15,6 @@ def tasks():
     schedule.every().monday.at("09:30").do(send_message_task, 2).tag('send_message').timezone = tz
     schedule.every().monday.at("11:00").do(send_message_task, 3).tag('send_message').timezone = tz
     schedule.every().monday.at("14:10").do(send_message_task, 4).tag('send_message').timezone = tz
-    schedule.every(10).seconds.do(send_message_task, 2).timezone = tz
-    schedule.every(10).seconds.do(send_message_task, 2).timezone = tz
 
 async def main():
     tasks()

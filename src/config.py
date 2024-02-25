@@ -16,10 +16,6 @@ class Settings(BaseSettings):
     @property
     def db_uri_asyncpg(self):
         return f'postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}'
-    
-    @property
-    def get_broker_url(self):
-        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/0"
 
     class Config:
         env_file = ".env"

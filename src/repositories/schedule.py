@@ -8,7 +8,7 @@ from sqlalchemy.orm import selectinload
 class ScheduleRepository(SQLAlchemyRepository):
     model = Schedule
 
-    async def get_one_schedule(self, id: int) -> ScheduleSchema | None:
+    async def get_one(self, id: int) -> ScheduleSchema | None:
         stmt = (
             select(Schedule)
             .options(selectinload(Schedule.group).selectinload(Groups.students))
